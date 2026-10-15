@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#12343b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>TripAtlas — путешествия и реальные цены</title>
+
+<style>
+*{box-sizing:border-box} :root{--ink:#17373b;--muted:#6b7c7c;--mint:#d8eee4;--paper:#f5f7f3;--line:#e2e9e4;--accent:#1e6757} body{margin:0;background:var(--paper);color:#1d3032;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:92px}.hero{background:linear-gradient(145deg,#12343b,#246451);color:white;padding:calc(20px + env(safe-area-inset-top)) 20px 25px;border-radius:0 0 28px 28px}.brand{display:flex;gap:10px;align-items:center}.logo{width:42px;height:42px;border-radius:14px;background:#d8eee4;color:#17373b;display:grid;place-items:center;font-size:25px}.brand b{display:block;font-size:20px}.brand small{display:block;color:#c4d9d2;margin-top:2px}.iconbtn{border:0;background:#ffffff22;color:inherit;border-radius:12px;padding:10px;font-size:17px}.hero>.iconbtn{float:right;margin-top:-44px}.hero h1{font-size:32px;line-height:1.06;letter-spacing:-.8px;margin:27px 0 10px}.hero p{color:#d7e6df;line-height:1.45;margin:0 0 18px}.search{display:flex;gap:8px;align-items:center;background:white;color:#526766;border-radius:14px;padding:0 13px;height:48px}.search input{border:0;outline:0;width:100%;font-size:15px}.tabs{display:flex;gap:5px;padding:13px 12px;position:sticky;top:0;background:#f5f7f3ed;backdrop-filter:blur(12px);z-index:2}.tab{flex:1;border:0;background:transparent;padding:11px 3px;border-radius:12px;color:#61716f;font-weight:650}.tab.active{background:var(--ink);color:white}main{padding:5px 15px 20px;max-width:720px;margin:auto}.sectionhead{display:flex;align-items:center;justify-content:space-between;margin:13px 2px}.sectionhead h2{font-size:21px;margin:0}.muted{color:var(--muted);font-size:13px;line-height:1.45}.card{background:white;border:1px solid var(--line);border-radius:20px;padding:14px;margin:12px 0;box-shadow:0 3px 14px #183b3508}.posttop{display:flex;align-items:center;gap:9px}.avatar{width:38px;height:38px;border-radius:50%;background:var(--mint);display:grid;place-items:center;font-size:18px}.grow{flex:1}.posttop b{display:block;font-size:14px}.posttop small{color:var(--muted)}.photo{height:175px;border-radius:15px;margin:13px 0;background:linear-gradient(135deg,#d6e8dc,#a6cfc3);display:grid;place-items:center;color:#215b4d;font-size:48px;position:relative;overflow:hidden}.photo.beach{background:linear-gradient(160deg,#9bd9db 0%,#d9f0e6 48%,#80bba3 49%,#2f8275 100%)}.photo.food{background:linear-gradient(135deg,#f2d9a9,#dba86b)}.photo.hotel{background:linear-gradient(135deg,#e7d9c9,#b7c9bd)}.photo.park{background:linear-gradient(135deg,#b4e4d4,#5caa96)}.pricepill{background:#e6f4ec;color:#205d4b;border-radius:11px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-weight:700}.pricepill small{font-weight:500;color:#60766e}.actions{display:flex;justify-content:space-between;color:#657774;font-size:13px;padding-top:12px}.primary{background:var(--accent);color:white;border:0;border-radius:13px;padding:13px 16px;font-weight:700}.secondary{background:#e5f0e9;color:#205c4d;border:0;border-radius:12px;padding:10px 12px;font-weight:650}.full{width:100%;margin-top:6px}.mapbox{background:#e5eee5;border-radius:20px;min-height:290px;position:relative;overflow:hidden;border:1px solid #d2e0d6;background-image:linear-gradient(35deg,transparent 45%,#ffffffb0 46%,#ffffffb0 48%,transparent 49%),linear-gradient(110deg,transparent 40%,#ffffff9c 41%,#ffffff9c 43%,transparent 44%),linear-gradient(160deg,#d8e9dd,#b9d7c9)}.river{position:absolute;left:35%;top:-10%;width:80px;height:130%;background:#9bd0d4;transform:rotate(28deg);border-radius:50%;opacity:.8}.route{position:absolute;left:20%;top:25%;width:60%;height:55%;border:3px dashed #267663;border-left-color:transparent;border-radius:45%;transform:rotate(-18deg)}.pin{position:absolute;background:#174f45;color:white;border:3px solid white;width:40px;height:40px;border-radius:50% 50% 50% 5px;transform:rotate(-45deg);display:grid;place-items:center;box-shadow:0 3px 9px #244b3a55}.pin span{transform:rotate(45deg)}.mapnote{position:absolute;bottom:12px;left:12px;right:12px;background:#ffffffed;padding:12px;border-radius:14px;font-size:13px}.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:white;border:1px solid var(--line);border-radius:16px;padding:16px}.stat strong{font-size:25px;display:block;margin:8px 0}.listrow{display:flex;align-items:flex-start;gap:12px}.caticon{background:var(--mint);width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:21px;flex-shrink:0}.listrow h3{margin:1px 0 5px;font-size:16px}.listrow p{margin:0;color:var(--muted);font-size:13px;line-height:1.4}.amount{font-weight:800;white-space:nowrap}.fab{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));width:58px;height:58px;border:0;border-radius:20px;background:#174f45;color:white;font-size:31px;box-shadow:0 8px 24px #174f4544;z-index:4}.modal{position:fixed;inset:0;background:#10282c88;z-index:10;display:flex;align-items:flex-end}.modal.hidden,.toast.hidden{display:none}.sheet{background:var(--paper);border-radius:24px 24px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));width:100%;max-height:92dvh;overflow:auto}.sheethead{display:flex;align-items:center;justify-content:space-between}.sheethead h2{margin:0;font-size:22px}form{display:grid;gap:13px}form label{display:grid;gap:6px;font-size:13px;font-weight:650;color:#3c5551}input,select,textarea{font:inherit;border:1px solid #d9e4dc;border-radius:12px;background:white;padding:12px;color:#233c39;width:100%;min-width:0}textarea{resize:vertical}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}.check{display:flex;align-items:center;gap:8px!important;font-weight:500!important}.check input{width:18px;height:18px}.toast{position:fixed;bottom:95px;left:18px;right:18px;background:#17373b;color:white;padding:14px;border-radius:14px;z-index:20;text-align:center}.empty{text-align:center;padding:28px 14px}.empty .emoji{font-size:38px}.smalltag{font-size:11px;background:#edf3ee;color:#557067;padding:5px 8px;border-radius:8px}@media(min-width:650px){.hero{padding-left:max(24px,calc((100% - 680px)/2));padding-right:max(24px,calc((100% - 680px)/2))}.tabs{justify-content:center}.tab{max-width:130px}.photo{height:240px}.modal{align-items:center;justify-content:center}.sheet{max-width:540px;border-radius:24px;max-height:88dvh}}
+
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="brand"><div class="logo">✦</div><div><b>TripAtlas</b><small>Путешествуй. Делись. Открывай.</small></div></div>
+  <button class="iconbtn" id="notifyBtn" aria-label="Уведомления">♧</button>
+  <h1>Мир — глазами<br>путешественников.</h1>
+  <p>Реальные места, фотографии, маршруты и цены от людей.</p>
+  <label class="search">⌕ <input id="search" placeholder="Найти место, город или цену"></label>
+</header>
+<nav class="tabs">
+  <button class="tab active" data-tab="feed">Лента</button>
+  <button class="tab" data-tab="map">Карта</button>
+  <button class="tab" data-tab="prices">Цены</button>
+  <button class="tab" data-tab="profile">Профиль</button>
+</nav>
+<main id="app"></main>
+<button class="fab" id="addBtn" aria-label="Добавить публикацию">＋</button>
+<div class="modal hidden" id="modal">
+  <div class="sheet">
+    <div class="sheethead"><h2>Добавить цену или место</h2><button id="closeModal" class="iconbtn">✕</button></div>
+    <p class="muted">Пример заполнения. Публикация пока сохраняется только в этом браузере.</p>
+    <form id="priceForm">
+      <label>Что это?<input name="item" required placeholder="Фо бо, номер отеля, билет в аквапарк"></label>
+      <div class="twocol">
+        <label>Цена<input name="amount" type="number" min="0.01" step="any" required placeholder="75000"></label>
+        <label>Валюта<select name="currency"><option value="VND">VND ₫</option><option value="USD">USD $</option><option value="THB">THB ฿</option><option value="EUR">EUR €</option><option value="RUB">RUB ₽</option></select></label>
+      </div>
+      <label>Категория<select name="category"><option>Еда и напитки</option><option>Жильё</option><option>Развлечения</option><option>Транспорт</option><option>Экскурсии и услуги</option><option>Другое</option></select></label>
+      <label>Место / заведение<input name="place" required placeholder="Название кафе или места"></label>
+      <label>Город и страна<input name="location" required placeholder="Фукуок, Вьетнам"></label>
+      <div class="twocol">
+        <label>За что цена?<input name="unit" placeholder="за порцию / ночь / билет"></label>
+        <label>Дата<input name="date" type="date" required></label>
+      </div>
+      <label class="check"><input name="confirmed" type="checkbox"> Есть чек, билет или фото меню</label>
+      <label>Комментарий<textarea name="note" rows="2" placeholder="Полезная информация для других"></textarea></label>
+      <button class="primary full" type="submit">Сохранить в прототип</button>
+    </form>
+  </div>
+</div>
+<div class="toast hidden" id="toast"></div>
+<script>
+const demo = [
+ {id:1,author:"Аня · путешественница",place:"Пляж Онг Ланг",location:"Фукуок, Вьетнам",date:"Сегодня",category:"Место",kind:"beach",symbol:"☼",caption:"Очень красивый пляж ближе к вечеру. Сохраните точку на карте.",price:null},
+ {id:2,author:"Максим",place:"Кафе у моря",location:"Фукуок, Вьетнам",date:"15 окт. 2026",category:"Еда и напитки",kind:"food",symbol:"♨",caption:"Фо бо, большая порция. Цена указана посетителем.",price:{amount:75000,currency:"VND",unit:"за порцию"}},
+ {id:3,author:"Ирина",place:"Апартаменты с кухней",location:"Нячанг, Вьетнам",date:"12 окт. 2026",category:"Жильё",kind:"hotel",symbol:"⌂",caption:"Пример цены за одну ночь. Проверяйте даты и дополнительные сборы.",price:{amount:650000,currency:"VND",unit:"за ночь"}},
+ {id:4,author:"Денис",place:"Аквапарк",location:"Фукуок, Вьетнам",date:"10 окт. 2026",category:"Развлечения",kind:"park",symbol:"≈",caption:"Демонстрационная запись стоимости билета.",price:{amount:750000,currency:"VND",unit:"за взрослый билет"}}
+];
+let userItems = [];
+let currentTab = "feed";
+const app = document.querySelector("#app");
+const modal = document.querySelector("#modal");
+const fmt = (n,c) => {let x=Number(n).toLocaleString("ru-RU",{maximumFractionDigits:2});return c==="VND"?x+" ₫":c==="USD"?"$"+x:c==="THB"?"฿"+x:c==="EUR"?"€"+x:c==="RUB"?x+" ₽":x+" "+c};
+const all = () => [...userItems,...demo];
+function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function card(p){
+ const price=p.price?`<div class="pricepill"><span><small>${escapeHTML(p.price.unit||"цена")}</small><br>${escapeHTML(p.category)}</span><span>${fmt(p.price.amount,p.price.currency)}</span></div>`:"";
+ return `<article class="card"><div class="posttop"><div class="avatar">✦</div><div class="grow"><b>${escapeHTML(p.author||"Путешественник")}</b><small>${escapeHTML(p.place)} · ${escapeHTML(p.location)}</small></div><span class="smalltag">${escapeHTML(p.dateLabel||p.date||"Недавно")}</span></div><div class="photo ${p.kind||"food"}">${escapeHTML(p.symbol||"✦")}</div><p>${escapeHTML(p.caption||"Публикация путешественника")}</p>${price}<div class="actions"><span>♡ Нравится</span><span>▢ Комментарий</span><span>⌖ На карте</span></div></article>`;
+}
+function render(){
+ document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===currentTab));
+ const q=(document.querySelector("#search").value||"").toLowerCase();
+ const items=all().filter(p=>([p.place,p.location,p.category,p.caption,p.author].join(" ")).toLowerCase().includes(q));
+ if(currentTab==="feed"){
+  app.innerHTML=`<div class="sectionhead"><h2>Лента путешествий</h2><span class="smalltag">Демо</span></div><p class="muted">Фото, советы и цены из разных мест. Сейчас записи демонстрационные.</p>${items.map(card).join("")}<div class="card"><b>Поделись своим открытием</b><p class="muted">Добавь место или цену — в этой демоверсии запись сохранится в памяти страницы.</p><button class="primary" onclick="openModal()">＋ Добавить публикацию</button></div>`;
+ }else if(currentTab==="map"){
+  app.innerHTML=`<div class="sectionhead"><h2>Карта путешествий</h2><span class="smalltag">Макет карты</span></div><div class="mapbox"><div class="river"></div><div class="route"></div><div class="pin" style="left:20%;top:22%"><span>⌂</span></div><div class="pin" style="left:57%;top:43%"><span>♨</span></div><div class="pin" style="left:70%;top:68%"><span>≈</span></div><div class="mapnote"><b>Фукуок, Вьетнам</b><br>На настоящей карте точки будут показывать опубликованные фото и цены. GPS-маршрут включается только с разрешения пользователя.</div></div><div class="sectionhead"><h2>Публикации на карте</h2></div>${items.map(card).join("")}`;
+ }else if(currentTab==="prices"){
+  const prices=items.filter(p=>p.price);
+  app.innerHTML=`<div class="sectionhead"><h2>Цены путешественников</h2><span class="smalltag">${prices.length} записей</span></div><p class="muted">Всегда проверяй дату, тип цены и условия. Демо-цены не являются актуальными предложениями.</p>${prices.map(p=>`<article class="card"><div class="listrow"><div class="caticon">${p.category==="Жильё"?"⌂":p.category==="Развлечения"?"≈":"♨"}</div><div class="grow"><h3>${escapeHTML(p.place)}</h3><p>${escapeHTML(p.location)} · ${escapeHTML(p.dateLabel||p.date)}</p><p>${escapeHTML(p.price.unit)} · ${escapeHTML(p.category)}</p></div><div class="amount">${fmt(p.price.amount,p.price.currency)}</div></div></article>`).join("")}<button class="primary full" onclick="openModal()">＋ Добавить цену</button>`;
+ }else{
+  app.innerHTML=`<div class="sectionhead"><h2>Мой профиль</h2></div><div class="card"><div class="posttop"><div class="avatar">☺</div><div><b>Путешественник</b><small>Демо-профиль</small></div></div><p class="muted">Здесь будут твои друзья, поездки, фотографии и настройки приватности.</p></div><div class="statgrid"><div class="stat">🌍<strong>0</strong><span class="muted">Стран посещено</span></div><div class="stat">📷<strong>${userItems.length}</strong><span class="muted">Моих записей в демо</span></div></div><div class="card"><b>Приватность</b><p class="muted">Публичность фото и точное местоположение должны настраиваться отдельно. Этот прототип не собирает GPS и не публикует фотографии.</p></div>`;
+ }
+}
+function openModal(){modal.classList.remove("hidden");const d=new Date();document.querySelector('[name="date"]').value=d.toISOString().slice(0,10)}
+function closeModal(){modal.classList.add("hidden")}
+window.openModal=openModal;
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{currentTab=b.dataset.tab;render()}));
+document.querySelector("#search").addEventListener("input",render);
+document.querySelector("#addBtn").addEventListener("click",openModal);
+document.querySelector("#closeModal").addEventListener("click",closeModal);
+modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
+document.querySelector("#notifyBtn").addEventListener("click",()=>toast("Push-уведомления подключаются после настройки сервера."));
+document.querySelector("#priceForm").addEventListener("submit",e=>{
+ e.preventDefault();const f=new FormData(e.target);
+ const category=f.get("category");
+ const kind=category==="Жильё"?"hotel":category==="Развлечения"?"park":category==="Еда и напитки"?"food":"beach";
+ const currency=f.get("currency");
+ userItems.unshift({id:Date.now(),author:"Вы",place:f.get("place"),location:f.get("location"),date:f.get("date"),dateLabel:f.get("date"),category,kind,symbol:category==="Жильё"?"⌂":category==="Развлечения"?"≈":category==="Еда и напитки"?"♨":"✦",caption:f.get("note")||`${f.get("item")} — цена добавлена пользователем.`,price:{amount:Number(f.get("amount")),currency,unit:f.get("unit")||"за единицу"},confirmed:f.get("confirmed")==="on"});
+ closeModal();e.target.reset();currentTab="prices";render();toast("Запись добавлена в демонстрационный прототип.");
+});
+function toast(s){const el=document.querySelector("#toast");el.textContent=s;el.classList.remove("hidden");setTimeout(()=>el.classList.add("hidden"),2600)}
+if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+render();
+
+</script>
+</body>
+</html>
