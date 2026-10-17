@@ -7,7 +7,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>TripAtlas — путешествия и реальные цены</title>
-
 <style>
 *{box-sizing:border-box}
 :root{--ink:#17373b;--muted:#6b7c7c;--mint:#d8eee4;--paper:#f5f7f3;--line:#e2e9e4;--accent:#1e6757}
@@ -41,6 +40,10 @@ main{padding:5px 15px 20px;max-width:720px;margin:auto}
 .photo.food{background:linear-gradient(135deg,#f2d9a9,#dba86b)}
 .photo.hotel{background:linear-gradient(135deg,#e7d9c9,#b7c9bd)}
 .photo.park{background:linear-gradient(135deg,#b4e4d4,#5caa96)}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo.has-image{background:#e5eee8}
+.upload-preview{display:none;width:100%;max-height:230px;object-fit:cover;border-radius:13px;margin-top:8px}
+.upload-help{font-size:12px;color:var(--muted);font-weight:400}
 .pricepill{background:#e6f4ec;color:#205d4b;border-radius:11px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-weight:700}
 .pricepill small{font-weight:500;color:#60766e}
 .actions{display:flex;justify-content:space-between;color:#657774;font-size:13px;padding-top:12px}
@@ -88,75 +91,51 @@ textarea{resize:vertical}
 }
 </style>
 </head>
-
 <body>
 <header class="hero">
-  <div class="brand">
-    <div class="logo">✦</div>
-    <div><b>TripAtlas</b><small>Путешествуй. Делись. Открывай.</small></div>
-  </div>
+  <div class="brand"><div class="logo">✦</div><div><b>TripAtlas</b><small>Путешествуй. Делись. Открывай.</small></div></div>
   <button class="iconbtn" id="notifyBtn" aria-label="Уведомления">♧</button>
   <h1>Мир — глазами<br>путешественников.</h1>
   <p>Реальные места, фотографии, маршруты и цены от людей.</p>
   <label class="search">⌕ <input id="search" placeholder="Найти место, город или цену"></label>
 </header>
-
 <nav class="tabs">
   <button class="tab active" data-tab="feed">Лента</button>
   <button class="tab" data-tab="map">Карта</button>
   <button class="tab" data-tab="prices">Цены</button>
   <button class="tab" data-tab="profile">Профиль</button>
 </nav>
-
 <main id="app"></main>
 <button class="fab" id="addBtn" aria-label="Добавить публикацию">＋</button>
-
 <div class="modal hidden" id="modal">
   <div class="sheet">
-    <div class="sheethead">
-      <h2>Добавить цену или место</h2>
-      <button id="closeModal" class="iconbtn">✕</button>
-    </div>
-    <p class="muted">Добавь место или цену для других путешественников.</p>
+    <div class="sheethead"><h2>Добавить цену или место</h2><button id="closeModal" class="iconbtn">✕</button></div>
+    <p class="muted">Добавь цену или место. Записи загружаются из общей базы TripAtlas.</p>
     <form id="priceForm">
       <label>Что это?<input name="item" required placeholder="Фо бо, номер отеля, билет в аквапарк"></label>
       <div class="twocol">
         <label>Цена<input name="amount" type="number" min="0.01" step="any" required placeholder="75000"></label>
-        <label>Валюта
-          <select name="currency">
-            <option value="VND">VND ₫</option>
-            <option value="USD">USD $</option>
-            <option value="THB">THB ฿</option>
-            <option value="EUR">EUR €</option>
-            <option value="RUB">RUB ₽</option>
-          </select>
-        </label>
+        <label>Валюта<select name="currency"><option value="VND">VND ₫</option><option value="USD">USD $</option><option value="THB">THB ฿</option><option value="EUR">EUR €</option><option value="RUB">RUB ₽</option></select></label>
       </div>
-      <label>Категория
-        <select name="category">
-          <option>Еда и напитки</option>
-          <option>Жильё</option>
-          <option>Развлечения</option>
-          <option>Транспорт</option>
-          <option>Экскурсии и услуги</option>
-          <option>Другое</option>
-        </select>
-      </label>
+      <label>Категория<select name="category"><option>Еда и напитки</option><option>Жильё</option><option>Развлечения</option><option>Транспорт</option><option>Экскурсии и услуги</option><option>Другое</option></select></label>
       <label>Место / заведение<input name="place" required placeholder="Название кафе или места"></label>
       <label>Город и страна<input name="location" required placeholder="Фукуок, Вьетнам"></label>
       <div class="twocol">
         <label>За что цена?<input name="unit" placeholder="за порцию / ночь / билет"></label>
         <label>Дата<input name="date" type="date" required></label>
       </div>
+      <label>Фотография места, еды или чека
+        <input id="photoFile" name="photo" type="file" accept="image/jpeg,image/png,image/webp" capture="environment">
+        <span class="upload-help">JPG, PNG или WebP · до 5 МБ. Фото загрузится вместе с публикацией.</span>
+        <img id="photoPreview" class="upload-preview" alt="Предпросмотр фотографии">
+      </label>
       <label class="check"><input name="confirmed" type="checkbox"> Есть чек, билет или фото меню</label>
       <label>Комментарий<textarea name="note" rows="2" placeholder="Полезная информация для других"></textarea></label>
       <button class="primary full" type="submit">Опубликовать</button>
     </form>
   </div>
 </div>
-
 <div class="toast hidden" id="toast"></div>
-
 <script>
 const demo = [
  {id:1,author:"Аня · путешественница",place:"Пляж Онг Ланг",location:"Фукуок, Вьетнам",date:"Сегодня",category:"Место",kind:"beach",symbol:"☼",caption:"Очень красивый пляж ближе к вечеру. Сохраните точку на карте.",price:null},
@@ -164,332 +143,196 @@ const demo = [
  {id:3,author:"Ирина",place:"Апартаменты с кухней",location:"Нячанг, Вьетнам",date:"12 окт. 2026",category:"Жильё",kind:"hotel",symbol:"⌂",caption:"Пример цены за одну ночь. Проверяйте даты и дополнительные сборы.",price:{amount:650000,currency:"VND",unit:"за ночь"}},
  {id:4,author:"Денис",place:"Аквапарк",location:"Фукуок, Вьетнам",date:"10 окт. 2026",category:"Развлечения",kind:"park",symbol:"≈",caption:"Демонстрационная запись стоимости билета.",price:{amount:750000,currency:"VND",unit:"за взрослый билет"}}
 ];
-
-let userItems = [];
-let currentTab = "feed";
-
-/* Supabase */
-const SUPABASE_URL = "https://txqzbjkdajhzhwmgxiox.supabase.co";
-const SUPABASE_KEY = "sb_publishable_JHV18XigN7-jYheN__hxWQ_2s77Mz6A";
-const POSTS_URL = SUPABASE_URL + "/rest/v1/posts";
-let backendItems = [];
-let backendReady = false;
-
-function decodePost(row){
-  let d = {};
-  try { d = JSON.parse(row.description || "{}"); } catch (_) {}
-
-  if (!d || typeof d !== "object" || !d.item) {
-    return {
-      id:row.id,
-      author:row.user_name || "Путешественник",
-      place:row.location || "Место не указано",
-      location:row.location || "",
-      dateLabel:row.created_at ? new Date(row.created_at).toLocaleDateString("ru-RU") : "Недавно",
-      category:"Место",
-      kind:"beach",
-      symbol:"✦",
-      caption:row.description || "Публикация путешественника",
-      price:null
-    };
-  }
-
-  return {
-    id:row.id,
-    author:row.user_name || "Путешественник",
-    place:d.place || d.item,
-    location:d.location || row.location || "",
-    date:d.date || "Недавно",
-    dateLabel:d.date || "Недавно",
-    category:d.category || "Другое",
-    kind:d.kind || "food",
-    symbol:d.symbol || "✦",
-    caption:d.note || `${d.item} — цена добавлена пользователем.`,
-    price:d.amount ? {
-      amount:Number(d.amount),
-      currency:d.currency || "VND",
-      unit:d.unit || "за единицу"
-    } : null
-  };
-}
-
-async function loadPosts(){
-  try {
-    const response = await fetch(
-      POSTS_URL + "?select=*&order=created_at.desc&limit=100",
-      {
-        headers:{
-          "apikey":SUPABASE_KEY,
-          "Authorization":"Bearer " + SUPABASE_KEY
-        }
-      }
-    );
-
-    if (!response.ok) throw new Error("HTTP " + response.status);
-
-    const rows = await response.json();
-    backendItems = rows.map(decodePost);
-    backendReady = true;
-    render();
-  } catch (error) {
-    backendReady = false;
-    console.error("TripAtlas Supabase:",error);
-  }
-}
-
-const app = document.querySelector("#app");
-const modal = document.querySelector("#modal");
-
-const fmt = (n,c) => {
-  let x = Number(n).toLocaleString("ru-RU",{maximumFractionDigits:2});
-  return c==="VND" ? x+" ₫" :
-    c==="USD" ? "$"+x :
-    c==="THB" ? "฿"+x :
-    c==="EUR" ? "€"+x :
-    c==="RUB" ? x+" ₽" : x+" "+c;
-};
-
-const all = () => [...userItems,...backendItems,...demo];
-
-function escapeHTML(s){
-  return String(s??"").replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
-}
-
+let userItems=[];
+let remoteItems=[];
+let currentTab="feed";
+const SUPABASE_URL="https://txqzbjkdajhzhwmgxiox.supabase.co";
+const SUPABASE_KEY="sb_publishable_JHV18XigN7-jYheN__hxWQ_2s77Mz6A";
+const supabaseHeaders={apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`,"Content-Type":"application/json"};
+let backendStatus="Подключаем общую базу…";
+const app=document.querySelector("#app");
+const modal=document.querySelector("#modal");
+const fmt=(n,c)=>{let x=Number(n).toLocaleString("ru-RU",{maximumFractionDigits:2});return c==="VND"?x+" ₫":c==="USD"?"$"+x:c==="THB"?"฿"+x:c==="EUR"?"€"+x:c==="RUB"?x+" ₽":x+" "+c};
+const all=()=>[...userItems,...remoteItems,...demo];
+function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function card(p){
-  const price = p.price ? `
-    <div class="pricepill">
-      <span><small>${escapeHTML(p.price.unit||"цена")}</small><br>${escapeHTML(p.category)}</span>
-      <span>${fmt(p.price.amount,p.price.currency)}</span>
-    </div>` : "";
-
-  return `
-    <article class="card">
-      <div class="posttop">
-        <div class="avatar">✦</div>
-        <div class="grow">
-          <b>${escapeHTML(p.author||"Путешественник")}</b>
-          <small>${escapeHTML(p.place)} · ${escapeHTML(p.location)}</small>
-        </div>
-        <span class="smalltag">${escapeHTML(p.dateLabel||p.date||"Недавно")}</span>
-      </div>
-      <div class="photo ${p.kind||"food"}">${escapeHTML(p.symbol||"✦")}</div>
-      <p>${escapeHTML(p.caption||"Публикация путешественника")}</p>
-      ${price}
-      <div class="actions">
-        <span>♡ Нравится</span>
-        <span>▢ Комментарий</span>
-        <span>⌖ На карте</span>
-      </div>
-    </article>`;
+ const price=p.price?`<div class="pricepill"><span><small>${escapeHTML(p.price.unit||"цена")}</small><br>${escapeHTML(p.category)}</span><span>${fmt(p.price.amount,p.price.currency)}</span></div>`:"";
+ const photo=p.photo_url?`<div class="photo has-image"><img src="${escapeHTML(p.photo_url)}" alt="Фото: ${escapeHTML(p.place)}" loading="lazy" onerror="this.closest('.photo').style.display='none'"></div>`:`<div class="photo ${p.kind||"food"}">${escapeHTML(p.symbol||"✦")}</div>`;
+ return `<article class="card"><div class="posttop"><div class="avatar">✦</div><div class="grow"><b>${escapeHTML(p.author||"Путешественник")}</b><small>${escapeHTML(p.place)} · ${escapeHTML(p.location)}</small></div><span class="smalltag">${escapeHTML(p.dateLabel||p.date||"Недавно")}</span></div>${photo}<p>${escapeHTML(p.caption||"Публикация путешественника")}</p>${price}<div class="actions"><span>♡ Нравится</span><span>▢ Комментарий</span><span>⌖ На карте</span></div></article>`;
 }
-
 function render(){
-  document.querySelectorAll(".tab").forEach(b =>
-    b.classList.toggle("active",b.dataset.tab===currentTab)
-  );
+ document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===currentTab));
+ const q=(document.querySelector("#search").value||"").toLowerCase();
+ const items=all().filter(p=>([p.place,p.location,p.category,p.caption,p.author].join(" ")).toLowerCase().includes(q));
+ if(currentTab==="feed"){
+  app.innerHTML=`<div class="sectionhead"><h2>Лента путешествий</h2><span class="smalltag">${remoteItems.length?"Общая база":"Подключение"}</span></div><p class="muted">${escapeHTML(backendStatus)} Демонстрационные примеры помечены отдельно.</p>${items.map(card).join("")}<div class="card"><b>Поделись своим открытием</b><p class="muted">Добавь место или цену — в этой демоверсии запись сохранится в памяти страницы.</p><button class="primary" onclick="openModal()">＋ Добавить публикацию</button></div>`;
+ }else if(currentTab==="map"){
+  app.innerHTML=`<div class="sectionhead"><h2>Карта путешествий</h2><span class="smalltag">Макет карты</span></div><div class="mapbox"><div class="river"></div><div class="route"></div><div class="pin" style="left:20%;top:22%"><span>⌂</span></div><div class="pin" style="left:57%;top:43%"><span>♨</span></div><div class="pin" style="left:70%;top:68%"><span>≈</span></div><div class="mapnote"><b>Фукуок, Вьетнам</b><br>На настоящей карте точки будут показывать опубликованные фото и цены. GPS-маршрут включается только с разрешения пользователя.</div></div><div class="sectionhead"><h2>Публикации на карте</h2></div>${items.map(card).join("")}`;
+ }else if(currentTab==="prices"){
+  const prices=items.filter(p=>p.price);
+  app.innerHTML=`<div class="sectionhead"><h2>Цены путешественников</h2><span class="smalltag">${prices.length} записей</span></div><p class="muted">${escapeHTML(backendStatus)} Проверяй дату, тип цены и условия.</p>${prices.map(p=>`<article class="card"><div class="listrow">${p.photo_url?`<img src="${escapeHTML(p.photo_url)}" alt="Фото: ${escapeHTML(p.place)}" loading="lazy" style="width:64px;height:64px;object-fit:cover;border-radius:12px;flex-shrink:0" onerror="this.style.display='none'">`:`<div class="caticon">${p.category==="Жильё"?"⌂":p.category==="Развлечения"?"≈":"♨"}</div>`}<div class="grow"><h3>${escapeHTML(p.place)}</h3><p>${escapeHTML(p.location)} · ${escapeHTML(p.dateLabel||p.date)}</p><p>${escapeHTML(p.price.unit)} · ${escapeHTML(p.category)}</p></div><div class="amount">${fmt(p.price.amount,p.price.currency)}</div></div></article>`).join("")}<button class="primary full" onclick="openModal()">＋ Добавить цену</button>`;
+ }else{
+  app.innerHTML=`<div class="sectionhead"><h2>Мой профиль</h2></div><div class="card"><div class="posttop"><div class="avatar">☺</div><div><b>Путешественник</b><small>Демо-профиль</small></div></div><p class="muted">Здесь будут твои друзья, поездки, фотографии и настройки приватности.</p></div><div class="statgrid"><div class="stat">🌍<strong>0</strong><span class="muted">Стран посещено</span></div><div class="stat">📷<strong>${userItems.length}</strong><span class="muted">Моих записей в демо</span></div></div><div class="card"><b>Приватность</b><p class="muted">Публичность фото и точное местоположение должны настраиваться отдельно. Этот прототип не собирает GPS и не публикует фотографии.</p></div>`;
+ }
+}
+function openModal(){modal.classList.remove("hidden");const d=new Date();document.querySelector('[name="date"]').value=d.toISOString().slice(0,10)}
+function closeModal(){modal.classList.add("hidden")}
+window.openModal=openModal;
 
-  const q = (document.querySelector("#search").value||"").toLowerCase();
-  const items = all().filter(p =>
-    [p.place,p.location,p.category,p.caption,p.author].join(" ").toLowerCase().includes(q)
-  );
-
-  if(currentTab==="feed"){
-    app.innerHTML = `
-      <div class="sectionhead">
-        <h2>Лента путешествий</h2>
-        <span class="smalltag">${backendReady ? "Supabase подключён" : "Прототип"}</span>
-      </div>
-      <p class="muted">Записи сообщества загружаются из базы. Примеры ниже — демонстрационные.</p>
-      ${items.map(card).join("")}
-      <div class="card">
-        <b>Поделись своим открытием</b>
-        <p class="muted">Добавь место или цену для других путешественников.</p>
-        <button class="primary" onclick="openModal()">＋ Добавить публикацию</button>
-      </div>`;
-  } else if(currentTab==="map"){
-    app.innerHTML = `
-      <div class="sectionhead">
-        <h2>Карта путешествий</h2>
-        <span class="smalltag">Макет карты</span>
-      </div>
-      <div class="mapbox">
-        <div class="river"></div><div class="route"></div>
-        <div class="pin" style="left:20%;top:22%"><span>⌂</span></div>
-        <div class="pin" style="left:57%;top:43%"><span>♨</span></div>
-        <div class="pin" style="left:70%;top:68%"><span>≈</span></div>
-        <div class="mapnote">
-          <b>Фукуок, Вьетнам</b><br>
-          На настоящей карте точки будут показывать опубликованные фото и цены.
-          GPS-маршрут включается только с разрешения пользователя.
-        </div>
-      </div>
-      <div class="sectionhead"><h2>Публикации на карте</h2></div>
-      ${items.map(card).join("")}`;
-  } else if(currentTab==="prices"){
-    const prices = items.filter(p=>p.price);
-    app.innerHTML = `
-      <div class="sectionhead">
-        <h2>Цены путешественников</h2>
-        <span class="smalltag">${prices.length} записей</span>
-      </div>
-      <p class="muted">Всегда проверяй дату, тип цены и условия. Демо-цены не являются актуальными предложениями.</p>
-      ${prices.map(p=>`
-        <article class="card">
-          <div class="listrow">
-            <div class="caticon">${p.category==="Жильё"?"⌂":p.category==="Развлечения"?"≈":"♨"}</div>
-            <div class="grow">
-              <h3>${escapeHTML(p.place)}</h3>
-              <p>${escapeHTML(p.location)} · ${escapeHTML(p.dateLabel||p.date)}</p>
-              <p>${escapeHTML(p.price.unit)} · ${escapeHTML(p.category)}</p>
-            </div>
-            <div class="amount">${fmt(p.price.amount,p.price.currency)}</div>
-          </div>
-        </article>`).join("")}
-      <button class="primary full" onclick="openModal()">＋ Добавить цену</button>`;
-  } else {
-    app.innerHTML = `
-      <div class="sectionhead"><h2>Мой профиль</h2></div>
-      <div class="card">
-        <div class="posttop">
-          <div class="avatar">☺</div>
-          <div><b>Путешественник</b><small>Демо-профиль</small></div>
-        </div>
-        <p class="muted">Здесь будут твои друзья, поездки, фотографии и настройки приватности.</p>
-      </div>
-      <div class="statgrid">
-        <div class="stat">🌍<strong>0</strong><span class="muted">Стран посещено</span></div>
-        <div class="stat">📷<strong>${userItems.length}</strong><span class="muted">Моих записей в демо</span></div>
-      </div>
-      <div class="card">
-        <b>Приватность</b>
-        <p class="muted">Публичность фото и точное местоположение должны настраиваться отдельно. Этот прототип не собирает GPS и не публикует фотографии.</p>
-      </div>`;
-  }
+const photoInput=document.querySelector("#photoFile");
+const photoPreview=document.querySelector("#photoPreview");
+let previewObjectUrl=null;
+photoInput.addEventListener("change",()=>{
+ const file=photoInput.files?.[0];
+ if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=null;}
+ if(!file){photoPreview.removeAttribute("src");photoPreview.style.display="none";return;}
+ if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
+  photoInput.value="";photoPreview.style.display="none";toast("Выбери фото в формате JPG, PNG или WebP.");return;
+ }
+ if(file.size>5*1024*1024){
+  photoInput.value="";photoPreview.style.display="none";toast("Фото должно быть не больше 5 МБ.");return;
+ }
+ previewObjectUrl=URL.createObjectURL(file);
+ photoPreview.src=previewObjectUrl;
+ photoPreview.style.display="block";
+});
+async function uploadPhoto(file){
+ if(!file)return null;
+ if(!["image/jpeg","image/png","image/webp"].includes(file.type))throw new Error("Поддерживаются фото JPG, PNG и WebP.");
+ if(file.size>5*1024*1024)throw new Error("Фото должно быть не больше 5 МБ.");
+ const ext=file.type==="image/jpeg"?"jpg":file.type==="image/png"?"png":"webp";
+ const path=`posts/${Date.now()}-${crypto.randomUUID()}.${ext}`;
+ const url=`${SUPABASE_URL}/storage/v1/object/tripatlas-photos/${path}`;
+ const response=await fetch(url,{
+  method:"POST",
+  headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`,"Content-Type":file.type,"x-upsert":"false"},
+  body:file
+ });
+ if(!response.ok){
+  let detail="";
+  try{const j=await response.json();detail=j.message||j.error||j.error_description||""}catch{}
+  throw new Error(detail?`Не удалось загрузить фото: ${detail}`:`Не удалось загрузить фото (${response.status}). Проверь Storage policy.`);
+ }
+ return `${SUPABASE_URL}/storage/v1/object/public/tripatlas-photos/${path.split("/").map(encodeURIComponent).join("/")}`;
 }
 
-function openModal(){
-  modal.classList.remove("hidden");
-  const d = new Date();
-  document.querySelector('[name="date"]').value = d.toISOString().slice(0,10);
-}
-
-function closeModal(){
-  modal.classList.add("hidden");
-}
-
-window.openModal = openModal;
-
-document.querySelectorAll(".tab").forEach(b =>
-  b.addEventListener("click",()=>{
-    currentTab=b.dataset.tab;
-    render();
-  })
-);
-
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{currentTab=b.dataset.tab;render()}));
 document.querySelector("#search").addEventListener("input",render);
 document.querySelector("#addBtn").addEventListener("click",openModal);
 document.querySelector("#closeModal").addEventListener("click",closeModal);
-modal.addEventListener("click",e=>{
-  if(e.target===modal) closeModal();
-});
-
-document.querySelector("#notifyBtn").addEventListener("click",()=>
-  toast("Push-уведомления подключаются после настройки сервера.")
-);
+modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
+document.querySelector("#notifyBtn").addEventListener("click",()=>toast("Push-уведомления подключаются после настройки сервера."));
 
 document.querySelector("#priceForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-
-  const form = e.target;
-  const f = new FormData(form);
-  const button = form.querySelector('button[type="submit"]');
-  const category = f.get("category");
-
-  const kind =
-    category==="Жильё" ? "hotel" :
-    category==="Развлечения" ? "park" :
-    category==="Еда и напитки" ? "food" : "beach";
-
-  const item = {
-    item:String(f.get("item")||"").trim(),
-    amount:Number(f.get("amount")),
-    currency:f.get("currency"),
-    category,
-    place:String(f.get("place")||"").trim(),
-    location:String(f.get("location")||"").trim(),
-    unit:String(f.get("unit")||"").trim(),
-    date:String(f.get("date")||""),
-    note:String(f.get("note")||"").trim(),
-    confirmed:f.get("confirmed")==="on",
-    kind,
-    symbol:category==="Жильё" ? "⌂" :
-      category==="Развлечения" ? "≈" :
-      category==="Еда и напитки" ? "♨" : "✦"
+ e.preventDefault();
+ const form=e.target;
+ const submitButton=form.querySelector('button[type="submit"]');
+ const f=new FormData(form);
+ const category=String(f.get("category")||"Другое");
+ const currency=String(f.get("currency")||"VND");
+ const item={
+  item:String(f.get("item")||""),
+  amount:Number(f.get("amount")),
+  currency,
+  category,
+  place:String(f.get("place")||""),
+  unit:String(f.get("unit")||"за единицу"),
+  date:String(f.get("date")||""),
+  note:String(f.get("note")||""),
+  confirmed:f.get("confirmed")==="on"
+ };
+ const photoFile=photoInput.files?.[0]||null;
+ submitButton.disabled=true;
+ submitButton.textContent=photoFile?"Загружаем фото…":"Публикуем…";
+ try{
+  const photo_url=await uploadPhoto(photoFile);
+  submitButton.textContent="Сохраняем публикацию…";
+  const post={
+   description:JSON.stringify(item),
+   location:String(f.get("location")||""),
+   photo_url,
+   user_name:"Путешественник"
   };
-
-  button.disabled = true;
-  button.textContent = "Публикуем…";
-
-  try {
-    const response = await fetch(POSTS_URL,{
-      method:"POST",
-      headers:{
-        "apikey":SUPABASE_KEY,
-        "Authorization":"Bearer "+SUPABASE_KEY,
-        "Content-Type":"application/json",
-        "Prefer":"return=representation"
-      },
-      body:JSON.stringify({
-        description:JSON.stringify(item),
-        location:item.location,
-        user_name:"Путешественник",
-        photo_url:null
-      })
-    });
-
-    if(!response.ok){
-      const detail = await response.text();
-      console.error("TripAtlas insert:",response.status,detail);
-
-      if(response.status===401 || response.status===403 || response.status===42501){
-        throw new Error("Supabase отклонил публикацию: политика INSERT требует входа. Нужно настроить вход или разрешение на публикацию.");
-      }
-
-      throw new Error("Ошибка Supabase ("+response.status+"). Проверь таблицу posts и её поля.");
-    }
-
-    const rows = await response.json();
-    backendItems.unshift(decodePost(rows[0]));
-
-    closeModal();
-    form.reset();
-    currentTab = "prices";
-    render();
-    toast("Опубликовано в Supabase.");
-  } catch(error) {
-    console.error(error);
-    toast(error.message||"Не удалось опубликовать. Проверь интернет.");
-  } finally {
-    button.disabled = false;
-    button.textContent = "Опубликовать";
+  const response=await fetch(`${SUPABASE_URL}/rest/v1/posts`,{
+   method:"POST",
+   headers:{...supabaseHeaders,Prefer:"return=representation"},
+   body:JSON.stringify(post)
+  });
+  if(!response.ok){
+   let detail="";
+   try{const j=await response.json();detail=j.message||j.details||j.hint||""}catch{}
+   if(response.status===401||response.status===403||response.status===42501){
+    throw new Error("База доступна, но публикация запрещена настройками доступа (RLS). Проверь политику INSERT для posts.");
+   }
+   throw new Error(detail||`Ошибка базы (${response.status})`);
   }
+  const rows=await response.json();
+  remoteItems.unshift(normalizePost(rows[0]));
+  backendStatus="Общая база подключена. Новая запись опубликована.";
+  closeModal();
+  form.reset();
+  photoPreview.removeAttribute("src");
+  photoPreview.style.display="none";
+  if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=null;}
+  currentTab="prices";
+  render();
+  toast(photo_url?"Публикация и фото сохранены в TripAtlas.":"Опубликовано в общей базе TripAtlas.");
+ }catch(err){
+  console.error("TripAtlas publish error",err);
+  toast(err.message||"Не удалось отправить запись. Проверь подключение к интернету.");
+ }finally{
+  submitButton.disabled=false;
+  submitButton.textContent="Опубликовать";
+ }
 });
 
+function normalizePost(row){
+ let data={};
+ try{data=JSON.parse(row.description||"{}")}catch{data={item:row.description||"Публикация путешественника",note:row.description||""}}
+ const hasPrice=Number.isFinite(Number(data.amount))&&data.amount!==undefined&&data.amount!==null&&data.amount!=="";
+ const category=data.category||"Место";
+ const kind=category==="Жильё"?"hotel":category==="Развлечения"?"park":category==="Еда и напитки"?"food":"beach";
+ return {
+  id:row.id,
+  author:row.user_name||"Путешественник",
+  place:data.place||data.item||"Место",
+  location:row.location||"",
+  date:data.date||row.created_at||"",
+  dateLabel:data.date||"Из общей базы",
+  category,
+  kind,
+  symbol:category==="Жильё"?"⌂":category==="Развлечения"?"≈":category==="Еда и напитки"?"♨":"✦",
+  caption:data.note||((data.item&&hasPrice)?`${data.item} — цена добавлена путешественником.`:data.item)||"Публикация путешественника",
+  photo_url:row.photo_url||null,
+  price:hasPrice?{amount:Number(data.amount),currency:data.currency||"VND",unit:data.unit||"за единицу"}:null,
+  confirmed:!!data.confirmed,
+  fromSupabase:true
+ };
+}
+async function loadRemotePosts(){
+ try{
+  const response=await fetch(`${SUPABASE_URL}/rest/v1/posts?select=id,created_at,description,location,photo_url,user_name&order=created_at.desc&limit=100`,{
+   headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`}
+  });
+  if(!response.ok)throw new Error(`HTTP ${response.status}`);
+  const rows=await response.json();
+  remoteItems=rows.map(normalizePost);
+  backendStatus=`Общая база подключена. Загружено записей: ${remoteItems.length}.`;
+ }catch(err){
+  console.error("TripAtlas load error",err);
+  backendStatus="Не удалось загрузить общую базу; показаны демонстрационные записи. Проверь интернет и настройки Supabase.";
+ }
+ render();
+}
 function toast(s){
-  const el = document.querySelector("#toast");
-  el.textContent = s;
-  el.classList.remove("hidden");
-  setTimeout(()=>el.classList.add("hidden"),2600);
+ const el=document.querySelector("#toast");
+ el.textContent=s;
+ el.classList.remove("hidden");
+ setTimeout(()=>el.classList.add("hidden"),2600);
 }
-
-if("serviceWorker" in navigator && location.protocol.startsWith("http")){
-  navigator.serviceWorker.register("./sw.js").catch(()=>{});
-}
-
+if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
 render();
-loadPosts();
+loadRemotePosts();
 </script>
 </body>
 </html>
