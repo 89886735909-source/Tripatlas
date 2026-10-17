@@ -119,8 +119,7 @@ function selectedPinIcon(){return L.divIcon({className:"",html:'<div class="sele
 function setSelectedLocation(lat,lng){document.querySelector('#latitude').value=lat.toFixed(7);document.querySelector('#longitude').value=lng.toFixed(7);document.querySelector('#selectedCoords').textContent=`Выбрано: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;document.querySelector('#pickMapHelp').textContent='Метка выбрана. Можно передвинуть её нажатием на другое место.';if(pickerMarker)pickerMarker.setLatLng([lat,lng]);else pickerMarker=L.marker([lat,lng],{icon:selectedPinIcon(),draggable:true}).addTo(pickerMap);pickerMarker.off('dragend').on('dragend',e=>{const ll=e.target.getLatLng();setSelectedLocation(ll.lat,ll.lng)});}
 function addReliableTiles(map){
  const sources=[
-  {url:'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',opts:{subdomains:'abcd',maxZoom:20,attribution:'&copy; OpenStreetMap &copy; CARTO'}},
-  {url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png',opts:{maxZoom:19,attribution:'&copy; OpenStreetMap'}},
+  {url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png',opts:{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}},
   {url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',opts:{maxZoom:19,attribution:'Tiles &copy; Esri'}}
  ]; let index=0, layer=null, errors=0;
  function useSource(){if(layer)map.removeLayer(layer);const src=sources[index];layer=L.tileLayer(src.url,src.opts);errors=0;layer.on('tileerror',()=>{errors++;if(errors>=3&&index<sources.length-1){index++;useSource();}});layer.addTo(map);}
