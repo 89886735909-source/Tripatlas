@@ -3,46 +3,51 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#12343b">
 <title>TripAtlas — путешествия и цены</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f7f3;color:#1d3032;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:85px}
+body{margin:0;background:#f5f7f3;color:#1d3032;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:90px}
 header{background:linear-gradient(145deg,#12343b,#246451);color:white;padding:25px 18px;border-radius:0 0 25px 25px}
-header h1{font-size:29px;margin:20px 0 8px}
+.brand{font-size:23px;font-weight:800}
+header h1{font-size:29px;line-height:1.1;margin:22px 0 8px}
 header p{color:#d7e6df}
-.brand{font-size:22px;font-weight:bold}
+.search{width:100%;padding:13px;border:0;border-radius:12px;font-size:16px}
 .tabs{display:flex;gap:5px;padding:12px;position:sticky;top:0;background:#f5f7f3;z-index:2}
-.tab{flex:1;padding:12px 4px;border:0;border-radius:12px;background:#e5eee8;color:#23463e;font-weight:bold}
+.tab{flex:1;padding:12px 3px;border:0;border-radius:12px;background:#e5eee8;color:#23463e;font-weight:bold}
 .tab.active{background:#173b3c;color:white}
-main{max-width:700px;margin:auto;padding:10px 14px}
-.card{background:white;border:1px solid #e0e9e2;border-radius:18px;padding:14px;margin:12px 0}
-.card h3{margin:5px 0}
+main{max-width:720px;margin:auto;padding:8px 14px}
+.card{background:white;border:1px solid #e0e9e2;border-radius:18px;padding:14px;margin:12px 0;overflow:hidden}
+.card h3{margin:4px 0 7px}
 .muted{color:#718078;font-size:13px;line-height:1.5}
-.post-photo{width:100%;max-height:360px;object-fit:cover;border-radius:14px;margin-top:10px}
+.post-photo{width:100%;max-height:380px;object-fit:cover;border-radius:14px;margin-top:12px;display:block}
 .primary,.secondary{border:0;border-radius:12px;padding:13px;font-weight:bold;cursor:pointer}
 .primary{background:#1e6757;color:white}
 .secondary{background:#e3efe7;color:#205747}
 .full{width:100%}
-.fab{position:fixed;right:20px;bottom:20px;width:58px;height:58px;border:0;border-radius:20px;background:#174f45;color:white;font-size:30px;z-index:5}
+.fab{position:fixed;right:20px;bottom:20px;width:58px;height:58px;border:0;border-radius:20px;background:#174f45;color:white;font-size:30px;z-index:5;box-shadow:0 5px 18px #0002}
 .modal{position:fixed;inset:0;background:#10282c99;z-index:10;display:flex;align-items:flex-end}
 .modal.hidden{display:none}
-.sheet{background:#f5f7f3;border-radius:24px 24px 0 0;padding:20px 16px calc(25px + env(safe-area-inset-bottom));width:100%;max-height:92dvh;overflow:auto}
-.sheet h2{margin:0 0 15px}
+.sheet{background:#f5f7f3;border-radius:24px 24px 0 0;padding:20px 16px calc(25px + env(safe-area-inset-bottom));width:100%;max-height:93dvh;overflow:auto}
+.sheet h2{margin:0 0 16px}
 form{display:grid;gap:12px}
-label{display:grid;gap:6px;font-size:14px;font-weight:600}
+label{display:grid;gap:6px;font-size:14px;font-weight:650}
 input,select,textarea{font:inherit;width:100%;min-width:0;padding:12px;border:1px solid #d5e2d8;border-radius:11px;background:white}
 textarea{resize:vertical}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .photo-buttons{display:flex;gap:8px}
 .photo-buttons button{flex:1;min-width:0;font-size:13px}
 .file-hidden{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;overflow:hidden!important;pointer-events:none!important}
-#preview{display:none;width:100%;max-height:240px;object-fit:contain;border-radius:12px;margin-top:10px;background:#e5eee8}
-#toast{position:fixed;bottom:90px;left:15px;right:15px;background:#173b3c;color:white;padding:14px;border-radius:12px;z-index:20;text-align:center}
+#preview{display:none;width:100%;max-height:250px;object-fit:contain;border-radius:12px;margin-top:10px;background:#e5eee8}
+#toast{position:fixed;bottom:92px;left:15px;right:15px;background:#173b3c;color:white;padding:14px;border-radius:12px;z-index:20;text-align:center}
 #toast.hidden{display:none}
 .price{background:#e4f2e9;border-radius:10px;padding:12px;font-weight:bold;margin-top:10px}
-@media(min-width:650px){.modal{align-items:center;justify-content:center}.sheet{max-width:540px;border-radius:24px}}
+.status{font-size:12px;color:#61776d;font-weight:400}
+@media(min-width:650px){
+.modal{align-items:center;justify-content:center}
+.sheet{max-width:550px;border-radius:24px}
+}
 </style>
 </head>
 <body>
@@ -51,7 +56,7 @@ textarea{resize:vertical}
   <div class="brand">✦ TripAtlas</div>
   <h1>Мир глазами путешественников</h1>
   <p>Реальные места, фотографии и цены от людей.</p>
-  <input id="search" placeholder="Найти место или город">
+  <input class="search" id="search" placeholder="Найти место, город или цену">
 </header>
 
 <nav class="tabs">
@@ -66,8 +71,8 @@ textarea{resize:vertical}
 <div class="modal hidden" id="modal">
   <div class="sheet">
     <h2>Добавить место или цену</h2>
-
     <form id="postForm">
+
       <label>Что добавляем?
         <input name="item" required placeholder="Кафе, пляж, отель, экскурсия">
       </label>
@@ -108,23 +113,20 @@ textarea{resize:vertical}
       </label>
 
       <label>Комментарий
-        <textarea name="note" rows="2" placeholder="Полезная информация"></textarea>
+        <textarea name="note" rows="3" placeholder="Полезная информация для путешественников"></textarea>
       </label>
 
       <label>Фотография
         <div class="photo-buttons">
-          <button type="button" class="secondary" id="galleryBtn">🖼 Выбрать из галереи</button>
-          <button type="button" class="secondary" id="cameraBtn">📷 Сделать фото</button>
+          <button type="button" class="secondary" id="galleryBtn">🖼 Галерея</button>
+          <button type="button" class="secondary" id="cameraBtn">📷 Камера</button>
         </div>
 
-        <!-- Галерея: без capture -->
         <input class="file-hidden" id="galleryInput" type="file" accept="image/*">
-
-        <!-- Камера: с capture -->
         <input class="file-hidden" id="cameraInput" type="file" accept="image/*" capture="environment">
 
         <img id="preview" alt="Предпросмотр фотографии">
-        <span class="muted" id="photoStatus">Можно выбрать фото из галереи или сделать новый снимок. До 5 МБ.</span>
+        <span class="status" id="photoStatus">Фото больше 4,7 МБ будет автоматически сжато перед загрузкой.</span>
       </label>
 
       <button class="primary full" id="publishBtn" type="submit">Опубликовать</button>
@@ -139,12 +141,7 @@ textarea{resize:vertical}
 const SUPABASE_URL="https://txqzbjkdajhzhwmgxiox.supabase.co";
 const SUPABASE_KEY="sb_publishable_JHV18XigN7-jYheN__hxWQ_2s77Mz6A";
 const BUCKET="tripatlas-photos";
-
-const headers={
-  apikey:SUPABASE_KEY,
-  Authorization:"Bearer "+SUPABASE_KEY,
-  "Content-Type":"application/json"
-};
+const MAX_SIZE=4.7*1024*1024;
 
 const app=document.getElementById("app");
 const modal=document.getElementById("modal");
@@ -164,7 +161,8 @@ function toast(message){
   const el=document.getElementById("toast");
   el.textContent=message;
   el.classList.remove("hidden");
-  setTimeout(()=>el.classList.add("hidden"),3500);
+  clearTimeout(toast.timer);
+  toast.timer=setTimeout(()=>el.classList.add("hidden"),4000);
 }
 
 function esc(value){
@@ -175,34 +173,36 @@ function esc(value){
 
 function money(amount,currency){
   const n=Number(amount).toLocaleString("ru-RU",{maximumFractionDigits:2});
-  return currency==="VND"?n+" ₫":
-    currency==="USD"?"$"+n:
-    currency==="THB"?"฿"+n:
-    currency==="EUR"?"€"+n:
-    currency==="RUB"?n+" ₽":n+" "+currency;
+  if(currency==="VND")return n+" ₫";
+  if(currency==="USD")return "$"+n;
+  if(currency==="THB")return "฿"+n;
+  if(currency==="EUR")return "€"+n;
+  if(currency==="RUB")return n+" ₽";
+  return n+" "+currency;
 }
 
-function openModal(){
-  modal.classList.remove("hidden");
-}
-function closeModal(){
-  modal.classList.add("hidden");
-}
+function openModal(){modal.classList.remove("hidden")}
+function closeModal(){modal.classList.add("hidden")}
 
 document.getElementById("addBtn").addEventListener("click",openModal);
 document.getElementById("cancelBtn").addEventListener("click",closeModal);
-modal.addEventListener("click",e=>{
-  if(e.target===modal)closeModal();
-});
+modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
 
 document.getElementById("galleryBtn").addEventListener("click",()=>{
-  // Открываем системный выбор файлов iPhone без принудительного запуска камеры.
   galleryInput.click();
 });
-
 document.getElementById("cameraBtn").addEventListener("click",()=>{
   cameraInput.click();
 });
+
+function clearPreview(){
+  if(previewURL){
+    URL.revokeObjectURL(previewURL);
+    previewURL=null;
+  }
+  preview.removeAttribute("src");
+  preview.style.display="none";
+}
 
 function handlePhoto(input){
   const file=input.files&&input.files[0];
@@ -214,45 +214,121 @@ function handlePhoto(input){
     return;
   }
 
-  if(file.size>5*1024*1024){
-    toast("Фото должно быть не больше 5 МБ.");
-    input.value="";
-    return;
-  }
-
-  if(previewURL)URL.revokeObjectURL(previewURL);
-
   selectedPhoto=file;
+  clearPreview();
   previewURL=URL.createObjectURL(file);
   preview.src=previewURL;
   preview.style.display="block";
-  photoStatus.textContent="Выбрано фото: "+file.name;
+
+  const sizeMB=(file.size/1024/1024).toFixed(2);
+  photoStatus.textContent=file.size>MAX_SIZE
+    ?`Исходный размер ${sizeMB} МБ. Фото будет сжато автоматически.`
+    :`Фото ${sizeMB} МБ. Сжатие не требуется.`;
 }
 
 galleryInput.addEventListener("change",()=>handlePhoto(galleryInput));
 cameraInput.addEventListener("change",()=>handlePhoto(cameraInput));
 
+async function imageToDrawable(file){
+  if("createImageBitmap" in window){
+    try{
+      return await createImageBitmap(file,{imageOrientation:"from-image"});
+    }catch(e){}
+  }
+
+  const objectURL=URL.createObjectURL(file);
+  try{
+    return await new Promise((resolve,reject)=>{
+      const img=new Image();
+      img.onload=()=>resolve(img);
+      img.onerror=()=>reject(new Error(
+        "Не удалось открыть изображение. Попробуй выбрать фото в формате JPG или PNG."
+      ));
+      img.src=objectURL;
+    });
+  }finally{
+    URL.revokeObjectURL(objectURL);
+  }
+}
+
+async function canvasBlob(canvas,quality){
+  return new Promise((resolve,reject)=>{
+    canvas.toBlob(blob=>{
+      if(blob)resolve(blob);
+      else reject(new Error("Не удалось сжать фотографию."));
+    },"image/jpeg",quality);
+  });
+}
+
+async function compressImage(file){
+  if(file.size<=MAX_SIZE)return file;
+
+  toast("Сжимаем большую фотографию…");
+
+  const image=await imageToDrawable(file);
+  const originalWidth=image.width;
+  const originalHeight=image.height;
+
+  if(!originalWidth||!originalHeight){
+    if(image.close)image.close();
+    throw new Error("Не удалось определить размер фотографии.");
+  }
+
+  // Ограничиваем длинную сторону до 2560 пикселей для экономии памяти.
+  let scale=Math.min(1,2560/Math.max(originalWidth,originalHeight));
+  let compressed=null;
+
+  try{
+    for(let attempt=0;attempt<14;attempt++){
+      const canvas=document.createElement("canvas");
+      canvas.width=Math.max(1,Math.round(originalWidth*scale));
+      canvas.height=Math.max(1,Math.round(originalHeight*scale));
+
+      const ctx=canvas.getContext("2d");
+      if(!ctx)throw new Error("Браузер не смог обработать изображение.");
+
+      ctx.fillStyle="#ffffff";
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.drawImage(image,0,0,canvas.width,canvas.height);
+
+      for(const quality of [0.88,0.80,0.72,0.64,0.56,0.48,0.40]){
+        const blob=await canvasBlob(canvas,quality);
+        if(blob.size<=MAX_SIZE){
+          compressed=new File(
+            [blob],
+            "tripatlas-"+Date.now()+".jpg",
+            {type:"image/jpeg",lastModified:Date.now()}
+          );
+          break;
+        }
+      }
+
+      canvas.width=1;
+      canvas.height=1;
+
+      if(compressed)break;
+      scale*=0.75;
+    }
+  }finally{
+    if(image.close)image.close();
+  }
+
+  if(!compressed||compressed.size>MAX_SIZE){
+    throw new Error("Не удалось сжать фото до 5 МБ. Попробуй другое изображение.");
+  }
+
+  const before=(file.size/1024/1024).toFixed(2);
+  const after=(compressed.size/1024/1024).toFixed(2);
+  photoStatus.textContent=`Фото сжато: ${before} МБ → ${after} МБ.`;
+  return compressed;
+}
+
 async function uploadPhoto(file){
   if(!file)return null;
 
-  const allowed=["image/jpeg","image/png","image/webp","image/gif","image/heic","image/heif"];
-  if(!allowed.includes(file.type)&&!file.type.startsWith("image/")){
-    throw new Error("Выбранный файл не является изображением.");
-  }
-
-  if(file.size>5*1024*1024){
-    throw new Error("Фото должно быть не больше 5 МБ.");
-  }
-
-  let ext="jpg";
-  if(file.type==="image/png")ext="png";
-  else if(file.type==="image/webp")ext="webp";
-  else if(file.type==="image/gif")ext="gif";
-  else if(file.type==="image/heic")ext="heic";
-  else if(file.type==="image/heif")ext="heif";
-
-  const unique=Date.now()+"-"+Math.random().toString(36).slice(2);
-  const path="posts/"+unique+"."+ext;
+  // Автоматически сжимаем файл перед отправкой в Storage.
+  const processed=await compressImage(file);
+  const path="posts/"+Date.now()+"-"+Math.random().toString(36).slice(2)+".jpg";
   const url=SUPABASE_URL+"/storage/v1/object/"+BUCKET+"/"+path;
 
   const response=await fetch(url,{
@@ -260,10 +336,10 @@ async function uploadPhoto(file){
     headers:{
       apikey:SUPABASE_KEY,
       Authorization:"Bearer "+SUPABASE_KEY,
-      "Content-Type":file.type||"application/octet-stream",
+      "Content-Type":processed.type||"image/jpeg",
       "x-upsert":"false"
     },
-    body:file
+    body:processed
   });
 
   if(!response.ok){
@@ -272,7 +348,7 @@ async function uploadPhoto(file){
       const result=await response.json();
       detail=result.message||result.error||"";
     }catch(e){}
-    throw new Error(detail||"Не удалось загрузить фотографию. Ошибка "+response.status);
+    throw new Error(detail||"Ошибка загрузки фотографии: "+response.status);
   }
 
   return SUPABASE_URL+"/storage/v1/object/public/"+BUCKET+"/"+path;
@@ -286,9 +362,10 @@ function normalize(row){
     data={item:row.description||"Публикация"};
   }
 
-  const hasPrice=data.amount!==""&&data.amount!==null&&data.amount!==undefined&&Number.isFinite(Number(data.amount));
+  const hasPrice=data.amount!==""&&data.amount!==null&&
+    data.amount!==undefined&&Number.isFinite(Number(data.amount));
 
-  return {
+  return{
     id:row.id,
     item:data.item||"Место",
     place:data.place||"",
@@ -306,43 +383,57 @@ function render(){
   const query=(document.getElementById("search").value||"").toLowerCase();
 
   const filtered=posts.filter(p=>
-    [p.item,p.place,p.location,p.category,p.note].join(" ").toLowerCase().includes(query)
+    [p.item,p.place,p.location,p.category,p.note]
+      .join(" ").toLowerCase().includes(query)
   );
 
-  document.querySelectorAll(".tab").forEach(b=>{
-    b.classList.toggle("active",b.dataset.tab===activeTab);
+  document.querySelectorAll(".tab").forEach(button=>{
+    button.classList.toggle("active",button.dataset.tab===activeTab);
   });
 
   if(activeTab==="profile"){
     app.innerHTML=`
       <div class="card">
         <h2>Мой профиль</h2>
-        <p class="muted">Публикаций в общей ленте: ${posts.length}</p>
+        <p class="muted">Публикаций в общей базе: ${posts.length}</p>
         <p class="muted">TripAtlas — места, фотографии и цены путешественников.</p>
       </div>`;
     return;
   }
 
-  const list=activeTab==="prices"?filtered.filter(p=>p.price!==null):filtered;
+  const list=activeTab==="prices"
+    ?filtered.filter(p=>p.price!==null)
+    :filtered;
 
   app.innerHTML=`
     <h2>${activeTab==="prices"?"Цены путешественников":"Лента путешествий"}</h2>
-    <p class="muted">Публикации загружаются из общей базы TripAtlas.</p>
+    <p class="muted">Общая база TripAtlas. Фото доступны в публикациях.</p>
     ${list.map(p=>`
       <article class="card">
         <h3>${esc(p.item)}</h3>
         <div class="muted">${esc(p.place)} · ${esc(p.location)}</div>
-        ${p.photo_url?`<img class="post-photo" src="${esc(p.photo_url)}" alt="Фото публикации" loading="lazy">`:""}
+        ${p.photo_url?`
+          <img class="post-photo"
+            src="${esc(p.photo_url)}"
+            alt="Фото публикации"
+            loading="lazy"
+            onerror="this.style.display='none'">
+        `:""}
         ${p.note?`<p>${esc(p.note)}</p>`:""}
-        ${p.price!==null?`<div class="price">${money(p.price,p.currency)}</div>`:""}
+        ${p.price!==null?`
+          <div class="price">${money(p.price,p.currency)}</div>
+        `:""}
       </article>
     `).join("")}
-    ${list.length===0?'<div class="card"><p>Пока нет записей по этому запросу.</p></div>':""}
-    <button class="primary full" onclick="openModal()">＋ Добавить публикацию</button>
+    ${list.length===0?`
+      <div class="card">
+        <p>Пока нет записей по этому запросу.</p>
+      </div>`:""}
+    <button class="primary full" id="addFromList">＋ Добавить публикацию</button>
   `;
-}
 
-window.openModal=openModal;
+  document.getElementById("addFromList").addEventListener("click",openModal);
+}
 
 document.querySelectorAll(".tab").forEach(button=>{
   button.addEventListener("click",()=>{
@@ -361,7 +452,7 @@ form.addEventListener("submit",async e=>{
   const amount=amountText===""?null:Number(amountText);
 
   if(amountText!==""&&(!Number.isFinite(amount)||amount<0)){
-    toast("Проверь цену.");
+    toast("Проверь указанную цену.");
     return;
   }
 
@@ -375,11 +466,17 @@ form.addEventListener("submit",async e=>{
   };
 
   publishBtn.disabled=true;
-  publishBtn.textContent=selectedPhoto?"Загружаем фото…":"Публикуем…";
+  publishBtn.textContent=selectedPhoto?"Обработка фото…":"Публикуем…";
 
   try{
-    const photo_url=await uploadPhoto(selectedPhoto);
-    publishBtn.textContent="Сохраняем публикацию…";
+    let photo_url=null;
+
+    if(selectedPhoto){
+      const fileToUpload=selectedPhoto;
+      photoStatus.textContent="Проверяем размер и сжимаем фотографию при необходимости…";
+      photo_url=await uploadPhoto(fileToUpload);
+      publishBtn.textContent="Сохраняем публикацию…";
+    }
 
     const post={
       description:JSON.stringify(data),
@@ -390,7 +487,12 @@ form.addEventListener("submit",async e=>{
 
     const response=await fetch(SUPABASE_URL+"/rest/v1/posts",{
       method:"POST",
-      headers:{...headers,Prefer:"return=representation"},
+      headers:{
+        apikey:SUPABASE_KEY,
+        Authorization:"Bearer "+SUPABASE_KEY,
+        "Content-Type":"application/json",
+        Prefer:"return=representation"
+      },
       body:JSON.stringify(post)
     });
 
@@ -410,22 +512,16 @@ form.addEventListener("submit",async e=>{
     selectedPhoto=null;
     galleryInput.value="";
     cameraInput.value="";
-    preview.removeAttribute("src");
-    preview.style.display="none";
-    photoStatus.textContent="Можно выбрать фото из галереи или сделать новый снимок. До 5 МБ.";
-
-    if(previewURL){
-      URL.revokeObjectURL(previewURL);
-      previewURL=null;
-    }
+    clearPreview();
+    photoStatus.textContent="Фото больше 4,7 МБ будет автоматически сжато перед загрузкой.";
 
     closeModal();
     activeTab="feed";
     render();
     toast("Публикация сохранена!");
   }catch(error){
-    console.error(error);
-    toast(error.message||"Ошибка. Проверь интернет и настройки Supabase.");
+    console.error("TripAtlas error:",error);
+    toast(error.message||"Не удалось опубликовать запись.");
   }finally{
     publishBtn.disabled=false;
     publishBtn.textContent="Опубликовать";
@@ -436,10 +532,12 @@ async function loadPosts(){
   try{
     const response=await fetch(
       SUPABASE_URL+"/rest/v1/posts?select=id,created_at,description,location,photo_url,user_name&order=created_at.desc&limit=100",
-      {headers:{
-        apikey:SUPABASE_KEY,
-        Authorization:"Bearer "+SUPABASE_KEY
-      }}
+      {
+        headers:{
+          apikey:SUPABASE_KEY,
+          Authorization:"Bearer "+SUPABASE_KEY
+        }
+      }
     );
 
     if(!response.ok)throw new Error("HTTP "+response.status);
@@ -447,8 +545,8 @@ async function loadPosts(){
     const rows=await response.json();
     posts=rows.map(normalize);
   }catch(error){
-    console.error("Ошибка загрузки TripAtlas:",error);
-    toast("Не удалось загрузить записи из базы.");
+    console.error("TripAtlas load error:",error);
+    toast("Не удалось загрузить записи. Проверь подключение к интернету.");
   }
 
   render();
